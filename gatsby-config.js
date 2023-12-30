@@ -6,7 +6,7 @@ require("dotenv").config();
 module.exports = {
   siteMetadata: {
     title: `PortfolioLabb2`,
-    siteUrl: `https://www.yourdomain.tld`,
+    siteUrl: `https://delicate-granita-cec294.netlify.app/`,
   },
   plugins: [
     {
@@ -28,8 +28,8 @@ module.exports = {
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
-        host: "https://www.portfolioExample.com",
-        sitemap: "https://www.portfolioExample.com/sitemap.xml",
+        host: "https://delicate-granita-cec294.netlify.app/",
+        sitemap: "https://delicate-granita-cec294.netlify.app/sitemap.xml",
         policy: [{ userAgent: "*", allow: "/" }],
       },
     },
