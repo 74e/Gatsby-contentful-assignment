@@ -1,49 +1,65 @@
-import * as React from "react"
-import { Link } from "gatsby"
+import * as React from "react";
+import Layout from "../components/layout";
+import styled from "styled-components";
+import { navigate } from "gatsby";
+import SEOHeaderComponent from "../components/SEOHeader";
 
-const pageStyles = {
-  color: "#232129",
-  padding: "96px",
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-
-const NotFoundPage = () => {
+export default function NotFoundPage() {
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>Page not found</h1>
-      <p style={paragraphStyles}>
-        Sorry 😔, we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === "development" ? (
-          <>
-            <br />
-            Try creating a page in <code style={codeStyles}>src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link to="/">Go home</Link>.
-      </p>
-    </main>
-  )
+    <Layout>
+      <SEOHeaderComponent
+        title={"404 Not Found"}
+        description={`Whatever you were looking for doesn't exist.
+        Let's navigate back or explore other content on the site.`}
+      />
+
+      <ContentContainer>
+        <div className="content">
+          <h1>404 Not Found</h1>
+          <p>Whatever you were looking for doesn't exist.</p>
+          <button onClick={() => navigate("/")}>Go back</button>
+        </div>
+      </ContentContainer>
+    </Layout>
+  );
 }
 
-export default NotFoundPage
+// Styled components start here --------------
+const ContentContainer = styled.div`
+  padding: 0 24px;
+  .content {
+    background-color: var(--foreground);
+    border-radius: var(--border-radius);
+    border: var(--border);
+    padding: 20px;
+    color: var(--text-gray);
+    max-width: 500px;
+    margin: auto;
 
-export const Head = () => <title>Not found</title>
+    p {
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 20px 100px;
+      font-size: 16px;
+      font-family: inherit;
+      font-weight: bold;
+      text-decoration: none;
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      background-color: transparent;
+      border-radius: var(--border-radius);
+      transition: background-color 0.3s, color 0.3s;
+      margin: auto;
+      display: block;
+
+      &:hover {
+        background-color: var(--accent-color);
+        color: #fff;
+      }
+    }
+  }
+`;
+// Styled components end here --------------
