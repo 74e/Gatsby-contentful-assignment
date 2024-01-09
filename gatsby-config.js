@@ -7,6 +7,12 @@ module.exports = {
   siteMetadata: {
     title: `PortfolioLabb2`,
     siteUrl: `https://delicate-granita-cec294.netlify.app/`,
+    menuLinks: [
+      { endpoint: "/", name: "Home" },
+      { endpoint: "/portfolio", name: "Portfolio" },
+      { endpoint: "/about", name: "About" },
+      { endpoint: "/contact", name: "Contact" },
+    ],
   },
   plugins: [
     {

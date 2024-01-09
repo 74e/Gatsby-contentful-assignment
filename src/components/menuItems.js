@@ -1,16 +1,31 @@
 import React from "react";
-import { Link } from "gatsby";
+import { Link, useStaticQuery, graphql } from "gatsby";
 import styled from "styled-components";
 
 export default function MenuItemsComponent({ menuId }) {
   // These are the menu items that are in the header
   // I chose to put them into an array which I can then loop over
-  const links = [
-    { endpoint: "/", name: "Home" },
-    { endpoint: "/portfolio", name: "Portfolio" },
-    { endpoint: "/about", name: "About" },
-    { endpoint: "/contact", name: "Contact" },
-  ];
+  // const links = [
+  //   { endpoint: "/", name: "Home" },
+  //   { endpoint: "/portfolio", name: "Portfolio" },
+  //   { endpoint: "/about", name: "About" },
+  //   { endpoint: "/contact", name: "Contact" },
+  // ];
+
+  const queryData = useStaticQuery(graphql`
+    query SiteQuery {
+      site {
+        siteMetadata {
+          menuLinks {
+            endpoint
+            name
+          }
+        }
+      }
+    }
+  `);
+
+  const links = queryData.site.siteMetadata.menuLinks;
 
   return (
     <Menu className={menuId || ""}>

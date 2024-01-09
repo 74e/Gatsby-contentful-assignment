@@ -8,8 +8,14 @@ import SEOHeader from "../components/SEOHeader";
 export default function PortfolioPost({ data }) {
   // Since it's a simple element, I can destructure
   // any keys I want from the Contentful object.
-  const { title, date, assignmentType, postContent, category } =
-    data.contentfulPortfolioContent;
+  const {
+    title,
+    date,
+    assignmentType,
+    postContent,
+    category,
+    linkToPortfolio,
+  } = data.contentfulPortfolioContent;
   // Here im using getImage gatsby helper functiona gain to get image
   const image = getImage(data.contentfulPortfolioContent.image);
 
@@ -41,6 +47,10 @@ export default function PortfolioPost({ data }) {
               return <p key={i}>{paragraph}</p>;
             })}
 
+            <a href={linkToPortfolio} target="_blank" rel="noopener noreferrer">
+              Go to Project
+            </a>
+
             <p>Some technologies and tools used:</p>
             <TagContainer>
               {category.categories.map((tag) => {
@@ -71,6 +81,7 @@ export const query = graphql`
       image {
         gatsbyImageData(width: 700, placeholder: BLURRED, formats: [AUTO, WEBP])
       }
+      linkToPortfolio
       category {
         categories
       }
@@ -136,6 +147,13 @@ const InfoContainer = styled.div`
     margin: 4px 0 16px 0;
     font-size: 15px;
     color: var(--text-gray-highlight);
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--accent-color);
+    padding-bottom: 12px;
+    display: block;
   }
 `;
 

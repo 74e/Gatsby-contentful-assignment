@@ -13,7 +13,7 @@ export default function PostComponent({ post }) {
     <PostContainer>
       {/* Here I am linking to the indiviual post, I am using the ID from
        the referenced fullContentPost */}
-      <Link to={"/post/" + post.fullPostContent.id}>
+      <Link className="post-link" to={"/post/" + post.fullPostContent.id}>
         <PostTopBar>
           <PostTitle>{post.title}</PostTitle>
           <PostDate>{post.date}</PostDate>
@@ -22,18 +22,30 @@ export default function PostComponent({ post }) {
         <ImageContainer>
           <GatsbyImage image={image} alt={post.title} />
         </ImageContainer>
-
-        <InfoContainer>
-          <h4>{post.assignmentType}</h4>
-          <p>{post.shortDescription}</p>
-          <TagContainer>
-            {/* Here I'm just looping through all the tags from the reference */}
-            {post.category.categories.map((tag) => {
-              return <li key={tag}>{tag}</li>;
-            })}
-          </TagContainer>
-        </InfoContainer>
       </Link>
+
+      <InfoContainer>
+        <h4>{post.assignmentType}</h4>
+        <p>{post.shortDescription}</p>
+        <a
+          href={post.linkToPortfolio}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-link"
+        >
+          Go to project
+        </a>{" "}
+        |{" "}
+        <Link className="project-link" to={"/post/" + post.fullPostContent.id}>
+          Go to post
+        </Link>
+        <TagContainer>
+          {/* Here I'm just looping through all the tags from the reference */}
+          {post.category.categories.map((tag) => {
+            return <li key={tag}>{tag}</li>;
+          })}
+        </TagContainer>
+      </InfoContainer>
     </PostContainer>
   );
 }
@@ -57,7 +69,7 @@ const PostContainer = styled.div`
     width: 100%;
   }
 
-  a {
+  .post-link {
     text-decoration: none;
     font-family: inherit;
     color: inherit;
@@ -76,6 +88,10 @@ const PostContainer = styled.div`
 
     p {
       color: var(--text-gray-highlight);
+    }
+
+    .project-link {
+      color: var(--accent-bright);
     }
   }
 `;
@@ -114,8 +130,14 @@ const InfoContainer = styled.div`
   p {
     transition: all 0.5s ease;
     line-height: 16px;
-    margin: 4px 0 16px 0;
+    margin: 4px 0 12px 0;
     font-size: 15px;
+  }
+
+  .project-link {
+    transition: all 0.5s ease;
+    text-decoration: none;
+    color: inherit;
   }
 `;
 
@@ -123,7 +145,7 @@ const TagContainer = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-
+  margin-top: 16px;
   li {
     list-style: none;
     background-color: #122b39;
