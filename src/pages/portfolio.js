@@ -24,7 +24,7 @@ export default function Portfolio({ data }) {
     if (activeTags.length === 0) return posts;
 
     return posts.filter((post) => {
-      return activeTags.every((tag) => post.category.categories.includes(tag));
+      return activeTags.every((tag) => post.tags.includes(tag));
     });
   }
 
@@ -157,9 +157,7 @@ export const query = graphql`
             formats: [AUTO, WEBP]
           )
         }
-        category {
-          categories
-        }
+        tags
         linkToPortfolio
         fullPostContent {
           id

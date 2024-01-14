@@ -16,9 +16,7 @@ export default function Tags({ posts, activeTags, setActiveTags }) {
    * have one of the same, similar to objects which can only have unique key names
    */
   useEffect(() => {
-    const uniqueTags = [
-      ...new Set(posts.flatMap((post) => post.category.categories)),
-    ];
+    const uniqueTags = [...new Set(posts.flatMap((post) => post.tags))];
     setTags(Array.from(uniqueTags));
   }, [posts]);
 

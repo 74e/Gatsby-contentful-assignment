@@ -8,12 +8,13 @@ import SEOHeaderComponent from "../components/SEOHeader";
 
 export default function About({ data }) {
   // Getting the data from query
-  const rawData = data.allContentfulAboutPage.nodes[0];
-  const title = rawData.title;
-  const profileImg = getImage(rawData.profileImage);
+  const { title, profileImage, content, educations, workExperiences } =
+    data.allContentfulAboutPage.nodes[0];
+  const profileImg = getImage(profileImage);
   // Getting markdown content from query
-  const content = rawData.content.childMarkdownRemark.rawMarkdownBody;
+  const markdownContent = content.childMarkdownRemark.rawMarkdownBody;
 
+  console.log(educations, workExperiences);
   return (
     <Layout>
       <SEOHeaderComponent
@@ -29,8 +30,22 @@ export default function About({ data }) {
           </div>
 
           <h1>{title}</h1>
+          <h2>Education and work experiences</h2>
+          <div className="cv-info">
+            <ul className="educations">
+              {educations.map((education) => {
+                return <li>{education}</li>;
+              })}
+            </ul>
+
+            <ul className="work-experiences">
+              {workExperiences.map((work) => {
+                return <li>{work}</li>;
+              })}
+            </ul>
+          </div>
           {/* ReactMarkdown is react library to convert markdon into html */}
-          <ReactMarkdown>{content}</ReactMarkdown>
+          <ReactMarkdown>{markdownContent}</ReactMarkdown>
         </div>
       </ContentContainer>
     </Layout>
@@ -62,6 +77,8 @@ export const query = graphql`
             formats: [AUTO, WEBP]
           )
         }
+        educations
+        workExperiences
       }
     }
   }
@@ -78,6 +95,14 @@ const ContentContainer = styled.div`
     color: var(--text-gray);
     max-width: 980px;
     margin: auto;
+
+    .cv-info {
+      display: flex;
+      margin-bottom: 8px;
+      ul {
+        padding: 0 16px;
+      }
+    }
 
     h1,
     h2 {

@@ -5,10 +5,10 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
 export default function SearchItemComponent({ props }) {
   const { result, onModal, index, currentIndex } = props;
-  const image = getImage(result.image);
-  // console.log("index: " + index, "currentIndex: " + currentIndex);
+  const image = getImage(result.thumbnail);
+
   return (
-    <Link to={"/post/" + result.id}>
+    <Link to={"/post/" + result.fullPostContent.id}>
       {/* here is the highlighting donem if currentindex matches the index of the item it
       gets highlighted. If the mouse is on the modal however it goes away so the mouse
       can do the highlighting  */}

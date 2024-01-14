@@ -8,16 +8,13 @@ import SEOHeader from "../components/SEOHeader";
 export default function PortfolioPost({ data }) {
   // Since it's a simple element, I can destructure
   // any keys I want from the Contentful object.
-  const {
-    title,
-    date,
-    assignmentType,
-    postContent,
-    category,
-    linkToPortfolio,
-  } = data.contentfulPortfolioContent;
+  const fullPostTitle = data.contentfulPortfolioContent.title;
+  const { postContent } = data.contentfulPortfolioContent.postContent;
+  const { title, assignmentType, thumbnail, date, tags, linkToPortfolio } =
+    data.contentfulPortfolioContent.postReference;
+  console.log(data);
   // Here im using getImage gatsby helper functiona gain to get image
-  const image = getImage(data.contentfulPortfolioContent.image);
+  const image = getImage(thumbnail);
 
   return (
     <Layout>
@@ -29,7 +26,7 @@ export default function PortfolioPost({ data }) {
       <Main>
         <PostContainer>
           <PostTopBar>
-            <PostTitle>{title}</PostTitle>
+            <PostTitle>{fullPostTitle}</PostTitle>
             <PostDate>{date}</PostDate>
           </PostTopBar>
 
@@ -43,7 +40,7 @@ export default function PortfolioPost({ data }) {
             {/* I am using contentful long text here, I didnt like the
             default formatting so I split the paragraphs on the
             new lines and envelopmed them into p tags to make styling easier */}
-            {postContent.postContent.split("\n").map((paragraph, i) => {
+            {postContent.split("\n").map((paragraph, i) => {
               return <p key={i}>{paragraph}</p>;
             })}
 
@@ -53,7 +50,7 @@ export default function PortfolioPost({ data }) {
 
             <p>Some technologies and tools used:</p>
             <TagContainer>
-              {category.categories.map((tag) => {
+              {tags.map((tag) => {
                 return <li key={tag}>{tag}</li>;
               })}
             </TagContainer>
@@ -73,17 +70,22 @@ export const query = graphql`
   query ($postId: String!) {
     contentfulPortfolioContent(id: { eq: $postId }) {
       title
-      assignmentType
       postContent {
         postContent
       }
-      date
-      image {
-        gatsbyImageData(width: 700, placeholder: BLURRED, formats: [AUTO, WEBP])
-      }
-      linkToPortfolio
-      category {
-        categories
+      postReference {
+        title
+        assignmentType
+        thumbnail {
+          gatsbyImageData(
+            width: 700
+            placeholder: BLURRED
+            formats: [AUTO, WEBP]
+          )
+        }
+        date
+        tags
+        linkToPortfolio
       }
     }
   }

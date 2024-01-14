@@ -8,7 +8,7 @@ import SEOHeaderComponent from "../components/SEOHeader";
 
 export default function FrontPage({ data }) {
   // Extracting data from the query
-  const introductionLines = data.contentfulFrontPage.text;
+  const { greeting, occupation } = data.contentfulFrontPage;
   const image = getImage(data.contentfulFrontPage.profileImage);
 
   return (
@@ -24,10 +24,8 @@ export default function FrontPage({ data }) {
           <GatsbyImage image={image} alt="profile" />
 
           <TextContainer>
-            {/* rendering out each line from the greeting in span tags */}
-            {introductionLines.map((line, i) => {
-              return <span key={i}>{line}</span>;
-            })}
+            <span>{greeting}</span>
+            <span>{occupation}</span>
           </TextContainer>
         </HeroContent>
 
@@ -50,7 +48,8 @@ export default function FrontPage({ data }) {
 export const query = graphql`
   query {
     contentfulFrontPage {
-      text
+      greeting
+      occupation
       profileImage {
         gatsbyImageData(width: 300, placeholder: BLURRED, formats: [AUTO, WEBP])
       }

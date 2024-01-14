@@ -41,7 +41,7 @@ export default function PostComponent({ post }) {
         </Link>
         <TagContainer>
           {/* Here I'm just looping through all the tags from the reference */}
-          {post.category.categories.map((tag) => {
+          {post.tags.map((tag) => {
             return <li key={tag}>{tag}</li>;
           })}
         </TagContainer>

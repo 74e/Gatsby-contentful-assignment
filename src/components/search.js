@@ -18,20 +18,20 @@ export default function SearchComponent() {
    */
   const queryData = useStaticQuery(graphql`
     query {
-      allContentfulPortfolioContent {
+      allContentfulPortfolioPost {
         nodes {
-          id
           title
           assignmentType
-          image {
+          thumbnail {
             gatsbyImageData(
               width: 65
               placeholder: BLURRED
               formats: [AUTO, WEBP]
             )
           }
-          category {
-            categories
+          tags
+          fullPostContent {
+            id
           }
         }
       }
@@ -44,13 +44,11 @@ export default function SearchComponent() {
      * key "keyWords". It condenses all the searching terms to one string making it
      * easier to filter through in the next step.
      */
-    const rawData = queryData.allContentfulPortfolioContent.nodes;
+    const rawData = queryData.allContentfulPortfolioPost.nodes;
     const alteredData = rawData.map((node) => {
       return {
         ...node,
-        keyWords: `${node.title} ${
-          node.assignmentType
-        } ${node.category.categories.join(" ")}`,
+        keyWords: `${node.title} ${node.assignmentType} ${node.tags.join(" ")}`,
       };
     });
 
@@ -86,7 +84,7 @@ export default function SearchComponent() {
     if (e.key === "Enter" || e.type === "click") {
       if (filteredResult.length === 0) return;
       // Navigating to the current selected post
-      navigate(`/post/${filteredResult[currentIndex].id}`);
+      navigate(`/post/${filteredResult[currentIndex].fullPostContent.id}`);
     }
 
     if (e.key === "ArrowUp") {
